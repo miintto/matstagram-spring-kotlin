@@ -11,7 +11,7 @@ class UserService {
     @Autowired
     lateinit var authUserRepository: AuthUserRepository
 
-    fun getUserById(userPk: Long): AuthUser {
-        return authUserRepository.findById(userPk) ?: throw IllegalArgumentException("No User!")
+    fun getUserById(userId: Long): AuthUser {
+        return authUserRepository.findById(userId) ?: throw IllegalArgumentException("No User!")
     }
 }
