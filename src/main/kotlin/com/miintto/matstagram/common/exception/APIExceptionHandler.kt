@@ -11,4 +11,9 @@ class APIExceptionHandler {
     fun exception(e: Exception) : APIResponse {
         return APIResponse(Http5xx.SERVER_ERROR)
     }
+
+    @ExceptionHandler(value = [APIException::class])
+    fun exception(e: APIException) : APIResponse {
+        return APIResponse(e.responseFormat, e.data)
+    }
 }

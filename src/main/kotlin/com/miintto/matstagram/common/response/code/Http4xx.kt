@@ -9,4 +9,5 @@ enum class Http4xx(
 ) : ResponseFormat {
 
     BAD_REQUEST("F001", "에러", HttpStatus.BAD_REQUEST),
+    USER_NOT_FOUND("F002", "사용자를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
 }
