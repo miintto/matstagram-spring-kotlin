@@ -1,14 +1,9 @@
 package com.miintto.matstagram.common.response
 
+import com.miintto.matstagram.common.response.code.ResponseFormat
 import org.springframework.http.ResponseEntity
 
-data class ResponseDto(
-    val code: String,
-    val message: String,
-    val data: Any?,
-)
+class APIResponse(format: ResponseFormat, data: Any?) : ResponseEntity<ResponseDto>(ResponseDto(format.code, format.message, data), format.status) {
 
-class APIResponse(code: ResponseCode, data: Any?) : ResponseEntity<ResponseDto>(ResponseDto(code.name, code.message, data), code.status) {
-
-    constructor(code: ResponseCode) : this(code, null)
+    constructor(format: ResponseFormat) : this(format, null)
 }
