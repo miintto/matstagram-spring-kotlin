@@ -2,7 +2,7 @@ package com.miintto.matstagram.config
 
 import mu.KotlinLogging
 import org.springframework.web.servlet.HandlerInterceptor
-import org.springframework.web.servlet.ModelAndView
+import java.lang.Exception
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
@@ -23,8 +23,13 @@ class MatstagramInterceptor: HandlerInterceptor {
         return super.preHandle(request, response, handler)
     }
 
-    override fun postHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any, modelAndView: ModelAndView?) {
+    override fun afterCompletion(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        handler: Any,
+        ex: Exception?
+    ) {
         logger.info( "Response ${getRequestURI(request)} - ${response.status}")
-        super.postHandle(request, response, handler, modelAndView)
+        super.afterCompletion(request, response, handler, ex)
     }
 }
