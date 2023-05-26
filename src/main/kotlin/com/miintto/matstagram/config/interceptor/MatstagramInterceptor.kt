@@ -1,4 +1,4 @@
-package com.miintto.matstagram.config
+package com.miintto.matstagram.config.interceptor
 
 import mu.KotlinLogging
 import org.springframework.web.servlet.HandlerInterceptor

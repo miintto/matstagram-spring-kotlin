@@ -5,6 +5,7 @@ import com.miintto.matstagram.api.user.domain.AuthUser
 import com.miintto.matstagram.api.user.domain.repository.AuthUserRepository
 import com.miintto.matstagram.common.exception.APIException
 import com.miintto.matstagram.common.response.code.Http4xx
+import com.miintto.matstagram.common.security.JwtTokenProvider
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -13,6 +14,9 @@ class AuthService {
 
     @Autowired
     private lateinit var authUserRepository: AuthUserRepository
+
+    @Autowired
+    private lateinit var jwtTokenProvider: JwtTokenProvider
 
     private fun checkDuplicateUser(registerInfo: RegisterInfo) {
         if (authUserRepository.existsByUserName(registerInfo.userName)) {
@@ -32,8 +36,9 @@ class AuthService {
         return user
     }
 
-    fun register(registerInfo: RegisterInfo) {
+    fun register(registerInfo: RegisterInfo): Map<String, String> {
         checkDuplicateUser(registerInfo)
-        createUser(registerInfo)
+        val user = createUser(registerInfo)
+        return jwtTokenProvider.generateToken(user)
     }
 }
