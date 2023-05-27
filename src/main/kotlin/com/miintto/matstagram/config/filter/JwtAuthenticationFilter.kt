@@ -1,16 +1,16 @@
-package com.miintto.matstagram.common.security
+package com.miintto.matstagram.config.filter
 
+import com.miintto.matstagram.common.security.JwtTokenProvider
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
-import org.springframework.web.filter.GenericFilterBean
+import org.springframework.web.filter.OncePerRequestFilter
 import javax.servlet.FilterChain
-import javax.servlet.ServletRequest
-import javax.servlet.ServletResponse
 import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 @Component
-class JwtAuthenticationFilter : GenericFilterBean(){
+class JwtAuthenticationFilter : OncePerRequestFilter() {
 
     @Autowired
     private lateinit var jwtTokenProvider: JwtTokenProvider
@@ -19,9 +19,9 @@ class JwtAuthenticationFilter : GenericFilterBean(){
         val token = request.getHeader("Authorization") ?: return null
         val authArray = token.split(" ")
         if (authArray.size != 2) {
-            throw Exception()
+            return null
         } else if (authArray[0] != "JWT") {
-            throw Exception()
+            return null
         }
         return authArray[1]
     }
@@ -30,11 +30,15 @@ class JwtAuthenticationFilter : GenericFilterBean(){
         SecurityContextHolder.getContext().authentication = jwtTokenProvider.getAuthentication(token)
     }
 
-    override fun doFilter(request: ServletRequest?, response: ServletResponse?, chain: FilterChain?) {
-        val token = resolveToken(request as HttpServletRequest)
+    override fun doFilterInternal(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        filterChain: FilterChain,
+    ) {
+        val token = resolveToken(request)
         if (token != null && jwtTokenProvider.validateToken(token)) {
             setAuthorization(token)
         }
-        chain?.doFilter(request, response)
+        filterChain.doFilter(request, response)
     }
 }

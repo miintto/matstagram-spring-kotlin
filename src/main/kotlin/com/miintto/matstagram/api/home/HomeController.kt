@@ -3,10 +3,10 @@ package com.miintto.matstagram.api.home
 import com.miintto.matstagram.common.response.APIResponse
 import com.miintto.matstagram.common.response.code.Http2xx
 import org.springframework.boot.SpringBootVersion
-import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RestController
 
-@Controller
+@RestController
 class HomeController {
     @GetMapping("/")
     fun index(): APIResponse {

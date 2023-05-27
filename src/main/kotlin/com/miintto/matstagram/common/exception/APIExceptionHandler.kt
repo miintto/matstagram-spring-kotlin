@@ -5,27 +5,34 @@ import com.miintto.matstagram.common.response.code.Http4xx
 import com.miintto.matstagram.common.response.code.Http5xx
 import mu.KotlinLogging
 import org.springframework.http.converter.HttpMessageNotReadableException
-import org.springframework.web.bind.annotation.ControllerAdvice
+import org.springframework.security.core.AuthenticationException
 import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.RestControllerAdvice
 
 private val logger = KotlinLogging.logger {}
 
-@ControllerAdvice
+@RestControllerAdvice
 class APIExceptionHandler {
     @ExceptionHandler(value = [Exception::class])
-    fun exception(e: Exception) : APIResponse {
+    fun handleException(e: Exception): APIResponse {
         logger.error(e.message, e)
         return APIResponse(Http5xx.SERVER_ERROR)
     }
 
+    @ExceptionHandler(value = [AuthenticationException::class])
+    fun handleAuthError(e: AuthenticationException): APIResponse {
+        logger.error(e.message)
+        return APIResponse(Http4xx.UNAUTHENTICATED)
+    }
+
     @ExceptionHandler(value = [HttpMessageNotReadableException::class])
-    fun paramsError(e: Exception) : APIResponse {
+    fun handleParamsError(e: Exception): APIResponse {
         logger.error(e.message)
         return APIResponse(Http4xx.BAD_REQUEST)
     }
 
     @ExceptionHandler(value = [APIException::class])
-    fun exception(e: APIException) : APIResponse {
+    fun handleApiException(e: APIException): APIResponse {
         logger.error(e.toString())
         return APIResponse(e.responseFormat, e.data)
     }

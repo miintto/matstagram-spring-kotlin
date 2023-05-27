@@ -1,4 +1,4 @@
-package com.miintto.matstagram.api.auth
+package com.miintto.matstagram.api.auth.service
 
 import com.miintto.matstagram.api.auth.dto.RegisterInfo
 import com.miintto.matstagram.api.user.domain.AuthUser
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
-class AuthService {
+class RegisterService {
 
     @Autowired
     private lateinit var authUserRepository: AuthUserRepository
@@ -36,7 +36,7 @@ class AuthService {
         return user
     }
 
-    fun register(registerInfo: RegisterInfo): Map<String, String> {
+    fun run(registerInfo: RegisterInfo): Map<String, String> {
         checkDuplicateUser(registerInfo)
         val user = createUser(registerInfo)
         return jwtTokenProvider.generateToken(user)

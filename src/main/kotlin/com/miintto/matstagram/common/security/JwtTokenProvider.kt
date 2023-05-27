@@ -1,14 +1,15 @@
 package com.miintto.matstagram.common.security
 
+import com.miintto.matstagram.api.auth.service.UserPrincipalService
 import com.miintto.matstagram.api.user.domain.AuthUser
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
-import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Component
 import java.util.Date
 
@@ -18,7 +19,10 @@ class JwtTokenProvider {
     @Value("\${jwt.secret}")
     private lateinit var secretKey: String
 
-    private val accessExpirationInterval =  60 * 60 * 1000L  // 1시간
+    @Autowired
+    private lateinit var userPrincipalService: UserPrincipalService
+
+    private val accessExpirationInterval = 60 * 60 * 1000L  // 1시간
 
     private val refreshExpirationInterval = 90 * 24 * 60 * 60 * 1000L  // 90일
 
@@ -68,11 +72,7 @@ class JwtTokenProvider {
 
     fun getAuthentication(token: String): Authentication {
         val claims = Jwts.parserBuilder().setSigningKey(getSecretKey()).build().parseClaimsJws(token).body
-        val userDetails = User.builder()
-            .username(claims.subject)
-            .password("")
-            .roles(claims["permission"].toString())
-            .build()
+        val userDetails = userPrincipalService.loadUserByUsername(claims.subject)
         return UsernamePasswordAuthenticationToken(userDetails, "", userDetails.authorities)
     }
 }

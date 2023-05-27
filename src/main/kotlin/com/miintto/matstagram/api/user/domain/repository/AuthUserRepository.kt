@@ -7,6 +7,8 @@ interface AuthUserRepository : CrudRepository<AuthUser, String> {
 
     fun findById(userId: Long): AuthUser?
 
+    fun findByUserEmail(userEmail: String): AuthUser?
+
     fun existsByUserName(userName: String): Boolean
 
     fun existsByUserEmail(userEmail: String): Boolean

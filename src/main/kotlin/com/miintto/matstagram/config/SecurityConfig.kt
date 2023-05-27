@@ -1,6 +1,7 @@
 package com.miintto.matstagram.config
 
-import com.miintto.matstagram.common.security.JwtAuthenticationFilter
+import com.miintto.matstagram.common.security.JwtAuthenticationEntryPoint
+import com.miintto.matstagram.config.filter.JwtAuthenticationFilter
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -10,10 +11,13 @@ import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
 @Configuration
-class SecurityConfiguration {
+class SecurityConfig {
 
     @Autowired
     private lateinit var jwtAuthenticationFilter: JwtAuthenticationFilter
+
+    @Autowired
+    private lateinit var jwtAuthenticationEntryPoint: JwtAuthenticationEntryPoint
 
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
@@ -28,6 +32,8 @@ class SecurityConfiguration {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .exceptionHandling()
+            .authenticationEntryPoint(jwtAuthenticationEntryPoint);
         return http.build()
     }
 }
