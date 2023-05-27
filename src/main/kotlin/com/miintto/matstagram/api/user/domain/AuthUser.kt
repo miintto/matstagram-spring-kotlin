@@ -41,11 +41,4 @@ data class AuthUser (
     var createdDtm: LocalDateTime = LocalDateTime.now(),
 
     var lastLoginDtm: LocalDateTime? = null,
-) {
-    fun setPassword(password1: String, password2: String) {
-        if (password1 != password2) {
-            throw APIException(Http4xx.INVALID_PASSWORD, "비밀번호가 서로 일치하지 않습니다.")
-        }
-        this.password = password1
-    }
-}
+)
