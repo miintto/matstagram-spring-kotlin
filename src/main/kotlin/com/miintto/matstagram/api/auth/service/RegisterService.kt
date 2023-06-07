@@ -3,7 +3,7 @@ package com.miintto.matstagram.api.auth.service
 import com.miintto.matstagram.api.auth.dto.RegisterInfo
 import com.miintto.matstagram.api.user.domain.AuthUser
 import com.miintto.matstagram.api.user.domain.repository.AuthUserRepository
-import com.miintto.matstagram.common.exception.APIException
+import com.miintto.matstagram.common.exception.ApiException
 import com.miintto.matstagram.common.response.code.Http4xx
 import com.miintto.matstagram.common.security.JwtTokenProvider
 import org.springframework.beans.factory.annotation.Autowired
@@ -24,15 +24,15 @@ class RegisterService {
 
     private fun checkDuplicateUser(registerInfo: RegisterInfo) {
         if (authUserRepository.existsByUserName(registerInfo.userName)) {
-            throw APIException(Http4xx.BAD_REQUEST, "중복된 닉네임입니다.")
+            throw ApiException(Http4xx.BAD_REQUEST, "중복된 닉네임입니다.")
         } else if (authUserRepository.existsByUserEmail(registerInfo.userEmail)) {
-            throw APIException(Http4xx.BAD_REQUEST, "중복된 이메일입니다.")
+            throw ApiException(Http4xx.BAD_REQUEST, "중복된 이메일입니다.")
         }
     }
 
     private fun validatePassword(password1: String, password2: String) {
         if (password1 != password2) {
-            throw APIException(Http4xx.INVALID_PASSWORD, "비밀번호가 서로 일치하지 않습니다.")
+            throw ApiException(Http4xx.INVALID_PASSWORD, "비밀번호가 서로 일치하지 않습니다.")
         }
     }
 

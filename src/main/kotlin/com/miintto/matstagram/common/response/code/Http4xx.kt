@@ -6,7 +6,7 @@ enum class Http4xx(
     override val code: String,
     override val message: String,
     override val status: HttpStatus,
-) : ResponseFormat {
+) : BaseHttp {
 
     BAD_REQUEST("F001", "잘못된 요청", HttpStatus.BAD_REQUEST),
     UNAUTHENTICATED("F002", "잘못된 인증 정보입니다.", HttpStatus.UNAUTHORIZED),

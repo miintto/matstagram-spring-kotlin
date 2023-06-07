@@ -3,7 +3,7 @@ package com.miintto.matstagram.api.auth.service
 import com.miintto.matstagram.api.auth.dto.LoginInfo
 import com.miintto.matstagram.api.user.domain.AuthUser
 import com.miintto.matstagram.api.user.domain.repository.AuthUserRepository
-import com.miintto.matstagram.common.exception.APIException
+import com.miintto.matstagram.common.exception.ApiException
 import com.miintto.matstagram.common.response.code.Http4xx
 import com.miintto.matstagram.common.security.JwtTokenProvider
 import org.springframework.beans.factory.annotation.Autowired
@@ -23,12 +23,12 @@ class LoginService {
     private lateinit var passwordEncoder: PasswordEncoder
 
     private fun getUser(userEmail: String): AuthUser {
-        return authUserRepository.findByUserEmail(userEmail) ?: throw APIException(Http4xx.USER_NOT_FOUND)
+        return authUserRepository.findByUserEmail(userEmail) ?: throw ApiException(Http4xx.USER_NOT_FOUND)
     }
 
     private fun checkPassword(rawPassword: String, encodedPassword: String) {
         if (!passwordEncoder.matches(rawPassword, encodedPassword)) {
-            throw APIException(Http4xx.INVALID_PASSWORD)
+            throw ApiException(Http4xx.INVALID_PASSWORD)
         }
     }
 

@@ -4,7 +4,7 @@ import com.miintto.matstagram.api.auth.dto.LoginInfo
 import com.miintto.matstagram.api.auth.dto.RegisterInfo
 import com.miintto.matstagram.api.auth.service.LoginService
 import com.miintto.matstagram.api.auth.service.RegisterService
-import com.miintto.matstagram.common.response.APIResponse
+import com.miintto.matstagram.common.response.ApiResponse
 import com.miintto.matstagram.common.response.code.Http2xx
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PostMapping
@@ -24,12 +24,12 @@ class AuthController {
     private lateinit var loginService: LoginService
 
     @PostMapping("/signup")
-    fun registerUser(@RequestBody @Valid registerInfo: RegisterInfo): APIResponse {
-        return APIResponse(Http2xx.CREATED, registerService.run(registerInfo))
+    fun registerUser(@RequestBody @Valid registerInfo: RegisterInfo): ApiResponse {
+        return ApiResponse(Http2xx.CREATED, registerService.run(registerInfo))
     }
 
     @PostMapping("/login")
-    fun login(@RequestBody @Valid loginInfo: LoginInfo): APIResponse {
-        return APIResponse(Http2xx.SUCCESS, loginService.run(loginInfo))
+    fun login(@RequestBody @Valid loginInfo: LoginInfo): ApiResponse {
+        return ApiResponse(Http2xx.SUCCESS, loginService.run(loginInfo))
     }
 }

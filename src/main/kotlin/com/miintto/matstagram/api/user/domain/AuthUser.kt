@@ -1,7 +1,5 @@
 package com.miintto.matstagram.api.user.domain
 
-import com.miintto.matstagram.common.exception.APIException
-import com.miintto.matstagram.common.response.code.Http4xx
 import java.time.LocalDateTime
 import javax.persistence.Enumerated
 import javax.persistence.Entity
