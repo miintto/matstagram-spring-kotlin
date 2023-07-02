@@ -34,6 +34,6 @@ class ApiExceptionHandler {
     @ExceptionHandler(value = [ApiException::class])
     fun handleApiException(e: ApiException): ApiResponse {
         logger.error(e.toString())
-        return ApiResponse(e.responseFormat, e.data)
+        return ApiResponse(e.http, e.data)
     }
 }

@@ -9,14 +9,12 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class HomeController {
     @GetMapping("/")
-    fun index(): ApiResponse {
-        return ApiResponse(
-            Http2xx.SUCCESS,
-            mapOf(
-                "java" to System.getProperty("java.version"),
-                "kotlin" to KotlinVersion.CURRENT.toString(),
-                "springBoot" to SpringBootVersion.getVersion(),
-            ),
-        )
-    }
+    fun index(): ApiResponse = ApiResponse(
+        Http2xx.SUCCESS,
+        mapOf(
+            "java" to System.getProperty("java.version"),
+            "kotlin" to KotlinVersion.CURRENT.toString(),
+            "springBoot" to SpringBootVersion.getVersion(),
+        ),
+    )
 }

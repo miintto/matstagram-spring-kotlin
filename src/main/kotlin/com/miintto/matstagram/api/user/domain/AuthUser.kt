@@ -17,7 +17,7 @@ enum class UserPermission {
 
 @Entity
 @Table(name = "t_auth_user")
-data class AuthUser (
+class AuthUser (
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

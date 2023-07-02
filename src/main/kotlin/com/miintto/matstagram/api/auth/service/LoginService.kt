@@ -8,9 +8,9 @@ import com.miintto.matstagram.common.response.code.Http4xx
 import com.miintto.matstagram.common.security.JwtTokenProvider
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 
-@Component
+@Service
 class LoginService {
 
     @Autowired
