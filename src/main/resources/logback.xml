@@ -9,7 +9,7 @@
     <appender name="TEXT_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <charset>UTF-8</charset>
-            <Pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n</Pattern>
+            <Pattern>%d [%-5level] %logger{35} - %msg%n</Pattern>
         </encoder>
     </appender>
 
@@ -23,14 +23,13 @@
         </rollingPolicy>
         <encoder>
             <charset>UTF-8</charset>
-            <pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+            <pattern>%d [%-5level] %logger{35} - %msg%n</pattern>
         </encoder>
     </appender>
 
     <root level="DEBUG">
         <appender-ref ref="TEXT_CONSOLE"/>
     </root>
-    <!-- INFO 레벨 이하 로그는 TEXT_FILE 어펜더로 로그 적재 -->
     <root level="INFO">
         <appender-ref ref="TEXT_FILE"/>
     </root>
