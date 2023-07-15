@@ -42,7 +42,6 @@ jobs:
         run: ./gradlew jibDockerBuild
 
       - name: LOGIN TO GHCR
-        id: login-ecr
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
@@ -51,7 +50,7 @@ jobs:
 
       - name: PUSH DOCKER IMAGE
         env:
-          GHCR_REGISTRY_NAME: ${{ steps.login-ecr.outputs.registry }}
+          GHCR_REGISTRY_NAME: ghcr.io/miintto
         run: |
           docker tag $PROJECT_NAME:latest $GHCR_REGISTRY_NAME/$PROJECT_NAME:${{ inputs.version }}
           docker push $GHCR_REGISTRY_NAME/$PROJECT_NAME:${{ inputs.version }}
