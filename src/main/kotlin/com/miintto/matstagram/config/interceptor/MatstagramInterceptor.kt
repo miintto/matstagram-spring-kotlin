@@ -21,7 +21,7 @@ class MatstagramInterceptor: HandlerInterceptor {
     }
 
     private fun loggingRequestBody(request: ContentCachingRequestWrapper) {
-        val requestBody = String(request.getContentAsByteArray(), Charsets.UTF_8)
+        val requestBody = String(request.contentAsByteArray, Charsets.UTF_8)
         if (requestBody.isNotBlank()) {
             logger.info("Request Body - $requestBody")
         }

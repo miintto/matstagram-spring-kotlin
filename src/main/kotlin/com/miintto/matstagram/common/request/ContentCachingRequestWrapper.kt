@@ -24,5 +24,6 @@ class ContentCachingRequestWrapper(request: HttpServletRequest) : HttpServletReq
         }
     }
 
-    fun getContentAsByteArray(): ByteArray = this.inputStream.readAllBytes()
+    val contentAsByteArray: ByteArray
+        get() = this.inputStream.readAllBytes()
 }

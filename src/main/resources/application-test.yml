@@ -5,3 +5,5 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+jwt:
+  secret: c1ed7355-e0ac-40b1-92d0-0cb5d36d0094

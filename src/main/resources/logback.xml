@@ -9,10 +9,10 @@
     <appender name="TEXT_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <charset>UTF-8</charset>
-            <Pattern>%d [%-5level] %logger{35} - %msg%n</Pattern>
+            <pattern>%d [%-5level] %logger{35} - %msg%n</pattern>
         </encoder>
     </appender>
-
+d
     <appender name="TEXT_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_FILE_PATH}/${LOG_FILE_NAME}.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
@@ -27,10 +27,8 @@
         </encoder>
     </appender>
 
-    <root level="DEBUG">
-        <appender-ref ref="TEXT_CONSOLE"/>
-    </root>
     <root level="INFO">
+        <appender-ref ref="TEXT_CONSOLE"/>
         <appender-ref ref="TEXT_FILE"/>
     </root>
 

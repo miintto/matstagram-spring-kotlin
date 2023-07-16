@@ -40,7 +40,7 @@ class SecurityConfig {
             .and()
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
             .exceptionHandling()
-            .authenticationEntryPoint(jwtAuthenticationEntryPoint);
+            .authenticationEntryPoint(jwtAuthenticationEntryPoint)
         return http.build()
     }
 }
