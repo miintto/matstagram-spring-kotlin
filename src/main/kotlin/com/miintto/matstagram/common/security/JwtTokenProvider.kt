@@ -2,6 +2,7 @@ package com.miintto.matstagram.common.security
 
 import com.miintto.matstagram.api.user.domain.AuthUser
 import io.jsonwebtoken.Claims
+import io.jsonwebtoken.JwtParser
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
@@ -11,27 +12,31 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Component
 import java.util.Date
+import javax.crypto.SecretKey
 
 @Component
 class JwtTokenProvider {
 
     @Value("\${jwt.secret}")
-    private lateinit var secretKey: String
+    private lateinit var jwtSecret: String
 
     private val accessExpirationInterval = 60 * 60 * 1000L  // 1시간
 
     private val refreshExpirationInterval = 90 * 24 * 60 * 60 * 1000L  // 90일
 
-    private fun getSecretKey() = Keys.hmacShaKeyFor(secretKey.toByteArray())
+    private val secretKey: SecretKey
+        get() = Keys.hmacShaKeyFor(jwtSecret.toByteArray())
+
+    private val jwtParser: JwtParser
+        get() = Jwts.parserBuilder().setSigningKey(secretKey).build()
 
     private fun buildToken(claims: Claims, interval: Long): String {
-        val now = Date()
         return Jwts.builder()
             .setHeaderParam("typ", "JWT")
             .setClaims(claims)
-            .setIssuedAt(now)
-            .setExpiration(Date(now.time + interval))
-            .signWith(getSecretKey(), SignatureAlgorithm.HS256)
+            .setIssuedAt(Date())
+            .setExpiration(Date(Date().time + interval))
+            .signWith(secretKey, SignatureAlgorithm.HS256)
             .compact()
     }
 
@@ -51,15 +56,12 @@ class JwtTokenProvider {
     }
 
     fun generateToken(user: AuthUser): Map<String, String> {
-        return mapOf(
-            "access" to generateAccessToken(user),
-            "refresh" to generateRefreshToken(user),
-        )
+        return mapOf("access" to generateAccessToken(user), "refresh" to generateRefreshToken(user))
     }
 
     fun validateToken(token: String): Boolean {
         return try {
-            Jwts.parserBuilder().setSigningKey(getSecretKey()).build().parse(token)
+            jwtParser.parse(token)
             true
         } catch (e: Exception) {
             false
@@ -67,7 +69,7 @@ class JwtTokenProvider {
     }
 
     fun getAuthentication(token: String): Authentication {
-        val claims = Jwts.parserBuilder().setSigningKey(getSecretKey()).build().parseClaimsJws(token).body
+        val claims = jwtParser.parseClaimsJws(token).body
         val userDetails = User.builder()
             .username(claims.subject)
             .password("")

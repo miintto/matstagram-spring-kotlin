@@ -29,18 +29,16 @@ class SecurityConfig {
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
-            .authorizeRequests()
-            .antMatchers("/user/**").authenticated()
-            .antMatchers("/auth/**").permitAll()
-            .and()
-            .httpBasic().disable()
+            .authorizeHttpRequests { request ->
+                request.antMatchers("/auth/**").permitAll()
+                    .anyRequest().authenticated()
+            }
             .csrf().disable()
             .formLogin().disable()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
+            .httpBasic().disable()
+            .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
-            .exceptionHandling()
-            .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+            .exceptionHandling { it.authenticationEntryPoint(jwtAuthenticationEntryPoint) }
         return http.build()
     }
 }
