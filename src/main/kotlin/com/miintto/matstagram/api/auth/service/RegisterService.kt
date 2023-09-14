@@ -37,13 +37,13 @@ class RegisterService {
     }
 
     private fun createUser(registerInfo: RegisterInfo): AuthUser {
-        val user = AuthUser(
-            userName = registerInfo.userName,
-            userEmail = registerInfo.userEmail,
-            password = passwordEncoder.encode(registerInfo.password)
+        return authUserRepository.save(
+            AuthUser(
+                userName = registerInfo.userName,
+                userEmail = registerInfo.userEmail,
+                password = passwordEncoder.encode(registerInfo.password)
+            )
         )
-        authUserRepository.save(user)
-        return user
     }
 
     fun run(registerInfo: RegisterInfo): Map<String, String> {
