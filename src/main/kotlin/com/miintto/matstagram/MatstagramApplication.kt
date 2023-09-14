@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class MatstagramApplication
 
 fun main(args: Array<String>) {
-	runApplication<MatstagramApplication>(*args)
+    runApplication<MatstagramApplication>(*args)
 }

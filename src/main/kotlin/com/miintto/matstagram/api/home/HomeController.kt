@@ -14,7 +14,7 @@ class HomeController {
         mapOf(
             "java" to System.getProperty("java.version"),
             "kotlin" to KotlinVersion.CURRENT.toString(),
-            "springBoot" to SpringBootVersion.getVersion(),
-        ),
+            "springBoot" to SpringBootVersion.getVersion()
+        )
     )
 }

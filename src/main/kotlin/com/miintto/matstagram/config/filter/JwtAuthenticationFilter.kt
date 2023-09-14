@@ -20,7 +20,7 @@ class JwtAuthenticationFilter : OncePerRequestFilter() {
         val authArray = token.split(" ")
         if (authArray.size != 2) {
             return null
-        } else if (authArray[0] != "JWT") {
+        } else if (authArray[0].lowercase() != "jwt") {
             return null
         }
         return authArray[1]

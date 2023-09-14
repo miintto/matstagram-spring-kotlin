@@ -12,12 +12,12 @@ import javax.persistence.Table
 enum class UserPermission {
     ANONYMOUS,
     NORMAL,
-    ADMIN,
+    ADMIN
 }
 
 @Entity
 @Table(name = "t_auth_user")
-class AuthUser (
+class AuthUser(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,5 +38,5 @@ class AuthUser (
 
     var createdDtm: LocalDateTime = LocalDateTime.now(),
 
-    var lastLoginDtm: LocalDateTime? = null,
+    var lastLoginDtm: LocalDateTime? = null
 )

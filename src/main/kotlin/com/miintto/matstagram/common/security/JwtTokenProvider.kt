@@ -20,9 +20,9 @@ class JwtTokenProvider {
     @Value("\${jwt.secret}")
     private lateinit var jwtSecret: String
 
-    private val accessExpirationInterval = 60 * 60 * 1000L  // 1시간
+    private val accessExpirationInterval = 60 * 60 * 1000L // 1시간
 
-    private val refreshExpirationInterval = 90 * 24 * 60 * 60 * 1000L  // 90일
+    private val refreshExpirationInterval = 90 * 24 * 60 * 60 * 1000L // 90일
 
     private val secretKey: SecretKey
         get() = Keys.hmacShaKeyFor(jwtSecret.toByteArray())

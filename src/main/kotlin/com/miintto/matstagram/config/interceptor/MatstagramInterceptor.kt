@@ -8,7 +8,7 @@ import java.lang.Exception
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-class MatstagramInterceptor: HandlerInterceptor {
+class MatstagramInterceptor : HandlerInterceptor {
 
     private val logger = KotlinLogging.logger {}
 
@@ -36,7 +36,7 @@ class MatstagramInterceptor: HandlerInterceptor {
     }
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
-        logger.info( "Request ${getRequestURI(request)}")
+        logger.info("Request ${getRequestURI(request)}")
         loggingRequestBody(request as ContentCachingRequestWrapper)
         return super.preHandle(request, response, handler)
     }
@@ -47,7 +47,7 @@ class MatstagramInterceptor: HandlerInterceptor {
         handler: Any,
         ex: Exception?
     ) {
-        logger.info( "Response ${getRequestURI(request)} - ${response.status}")
+        logger.info("Response ${getRequestURI(request)} - ${response.status}")
         loggingResponseBody(response as ContentCachingResponseWrapper)
         super.afterCompletion(request, response, handler, ex)
     }

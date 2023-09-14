@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
 
@@ -24,12 +25,21 @@ class AuthController {
     private lateinit var loginService: LoginService
 
     @PostMapping("/signup")
-    fun registerUser(@RequestBody @Valid registerInfo: RegisterInfo): ApiResponse {
+    @ResponseBody
+    fun registerUser(
+        @RequestBody
+        @Valid
+        registerInfo: RegisterInfo
+    ): ApiResponse {
         return ApiResponse(Http2xx.CREATED, registerService.run(registerInfo))
     }
 
     @PostMapping("/login")
-    fun login(@RequestBody @Valid loginInfo: LoginInfo): ApiResponse {
+    fun login(
+        @RequestBody
+        @Valid
+        loginInfo: LoginInfo
+    ): ApiResponse {
         return ApiResponse(Http2xx.SUCCESS, loginService.run(loginInfo))
     }
 }
