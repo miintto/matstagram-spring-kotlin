@@ -36,8 +36,8 @@ class LoginServiceTests {
     @Test
     @DisplayName("로그인 성공")
     fun testServiceRun() {
-        val user = AuthUser(userName = "test-user", userEmail = "test@test.com", password = "encrypted-string")
-        val loginInfo = LoginInfo("test@test.com", "password")
+        val user = getUser()
+        val loginInfo = getLoginInfo()
 
         given(authUserRepository.findByUserEmail(loginInfo.userEmail)).willReturn(user)
         given(passwordEncoder.matches(loginInfo.password, user.password)).willReturn(true)
@@ -53,7 +53,7 @@ class LoginServiceTests {
     @Test
     @DisplayName("존재하지 않는 사용자")
     fun testUserNotFound() {
-        val loginInfo = LoginInfo("test@test.com", "password")
+        val loginInfo = getLoginInfo()
 
         given(authUserRepository.findByUserEmail(loginInfo.userEmail)).willReturn(null)
 
@@ -65,8 +65,8 @@ class LoginServiceTests {
     @Test
     @DisplayName("비밀번호 불일치")
     fun testNotMatchedPassword() {
-        val user = AuthUser(userName = "test-user", userEmail = "test@test.com", password = "encrypted-string")
-        val loginInfo = LoginInfo("test@test.com", "password")
+        val user = getUser()
+        val loginInfo = getLoginInfo()
 
         given(authUserRepository.findByUserEmail(loginInfo.userEmail)).willReturn(user)
         given(passwordEncoder.matches(loginInfo.password, user.password)).willReturn(false)
@@ -76,5 +76,13 @@ class LoginServiceTests {
         }
 
         verify(authUserRepository).findByUserEmail(loginInfo.userEmail)
+    }
+
+    private fun getUser(): AuthUser {
+        return AuthUser(userName = "test-user", userEmail = "test@test.com", password = "encrypted-string")
+    }
+
+    private fun getLoginInfo(): LoginInfo {
+        return LoginInfo("test@test.com", "password")
     }
 }
