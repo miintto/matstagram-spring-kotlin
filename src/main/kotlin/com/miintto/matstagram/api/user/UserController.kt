@@ -3,6 +3,7 @@ package com.miintto.matstagram.api.user
 import com.miintto.matstagram.common.response.ApiResponse
 import com.miintto.matstagram.common.response.code.Http2xx
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -14,6 +15,11 @@ class UserController {
 
     @Autowired
     private lateinit var userService: UserService
+
+    @GetMapping("/profile")
+    fun getUserProfile(auth: Authentication): ApiResponse {
+        return ApiResponse(Http2xx.SUCCESS, userService.getUserById(auth.name.toLong()))
+    }
 
     @GetMapping("/{user-id}")
     fun getUser(@PathVariable("user-id") userId: Long): ApiResponse {

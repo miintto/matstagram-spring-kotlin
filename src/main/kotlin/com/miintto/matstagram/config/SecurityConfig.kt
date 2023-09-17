@@ -1,5 +1,6 @@
 package com.miintto.matstagram.config
 
+import com.miintto.matstagram.api.user.domain.UserPermission
 import com.miintto.matstagram.common.security.JwtAuthenticationEntryPoint
 import com.miintto.matstagram.config.filter.JwtAuthenticationFilter
 import org.springframework.beans.factory.annotation.Autowired
@@ -30,7 +31,10 @@ class SecurityConfig {
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
             .authorizeHttpRequests { request ->
-                request.antMatchers("/auth/**").permitAll()
+                request
+                    .antMatchers("/").permitAll()
+                    .antMatchers("/auth/**").permitAll()
+                    .regexMatchers("/user/\\d+").hasRole(UserPermission.ADMIN.name)
                     .anyRequest().authenticated()
             }
             .csrf().disable()

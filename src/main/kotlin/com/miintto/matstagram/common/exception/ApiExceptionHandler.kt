@@ -25,6 +25,12 @@ class ApiExceptionHandler {
         return ApiResponse(Http4xx.UNAUTHENTICATED)
     }
 
+    @ExceptionHandler(value = [AccessDeniedException::class])
+    fun handleAccessDenied(e: AccessDeniedException): ApiResponse {
+        logger.error(e.message)
+        return ApiResponse(Http4xx.PERMISSION_DENIED)
+    }
+
     @ExceptionHandler(value = [HttpMessageNotReadableException::class])
     fun handleParamsError(e: Exception): ApiResponse {
         logger.error(e.message)
