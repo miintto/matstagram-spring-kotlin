@@ -1,6 +1,6 @@
 package com.miintto.matstagram.common.security
 
-import com.miintto.matstagram.api.user.domain.AuthUser
+import com.miintto.matstagram.domain.AuthUser
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.JwtParser
 import io.jsonwebtoken.Jwts

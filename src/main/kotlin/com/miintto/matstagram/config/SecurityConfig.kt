@@ -1,6 +1,6 @@
 package com.miintto.matstagram.config
 
-import com.miintto.matstagram.api.user.domain.UserPermission
+import com.miintto.matstagram.domain.UserPermission
 import com.miintto.matstagram.common.security.JwtAuthenticationEntryPoint
 import com.miintto.matstagram.config.filter.JwtAuthenticationFilter
 import org.springframework.beans.factory.annotation.Autowired
