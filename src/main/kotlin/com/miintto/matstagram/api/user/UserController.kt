@@ -16,6 +16,9 @@ class UserController {
     @Autowired
     private lateinit var userService: UserService
 
+    @Autowired
+    private lateinit var userRecentViewService: UserRecentViewService
+
     @GetMapping("/profile")
     fun getUserProfile(auth: Authentication): ApiResponse {
         return ApiResponse(Http2xx.SUCCESS, userService.getUserById(auth.name.toLong()))
@@ -24,5 +27,10 @@ class UserController {
     @GetMapping("/{user-id}")
     fun getUser(@PathVariable("user-id") userId: Long): ApiResponse {
         return ApiResponse(Http2xx.SUCCESS, userService.getUserById(userId))
+    }
+
+    @GetMapping("recent/view")
+    fun getUserRecentView(auth: Authentication): ApiResponse {
+        return ApiResponse(Http2xx.SUCCESS, userRecentViewService.getUserRecentView(auth.name.toLong()))
     }
 }

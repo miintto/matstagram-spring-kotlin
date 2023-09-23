@@ -36,7 +36,7 @@ class PlaceControllerTests {
     @DisplayName("장소 상세정보 호출")
     @WithMockUser(username = "1", roles = ["USER"])
     fun testPlace() {
-        given(placeService.getPlace(anyLong())).willReturn(
+        given(placeService.searchPlace(anyLong(), anyLong())).willReturn(
             Place(userId = 1, placeName = "테스트장소", placeType = "restaurant")
         )
 

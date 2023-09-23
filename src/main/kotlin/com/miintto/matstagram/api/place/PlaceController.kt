@@ -20,8 +20,8 @@ class PlaceController {
     private lateinit var tagService: TagService
 
     @GetMapping("/place/{place-id}")
-    fun getPlaceDetail(@PathVariable("place-id") placeId: Long): ApiResponse {
-        return ApiResponse(Http2xx.SUCCESS, placeService.getPlace(placeId))
+    fun getPlaceDetail(@PathVariable("place-id") placeId: Long, auth: Authentication): ApiResponse {
+        return ApiResponse(Http2xx.SUCCESS, placeService.searchPlace(auth.name.toLong(), placeId))
     }
 
     @GetMapping("/place")

@@ -2,6 +2,7 @@ package com.miintto.matstagram.place.service
 
 import com.miintto.matstagram.api.place.domain.Place
 import com.miintto.matstagram.api.place.domain.repository.PlaceRepository
+import com.miintto.matstagram.api.place.manager.RecentProductManager
 import com.miintto.matstagram.api.place.service.PlaceService
 import com.miintto.matstagram.common.exception.ApiException
 import org.junit.jupiter.api.DisplayName
@@ -22,17 +23,21 @@ class PlaceServiceTests {
     @MockBean
     private lateinit var placeRepository: PlaceRepository
 
+    @MockBean
+    private lateinit var recentProductManager: RecentProductManager
+
     @Autowired
     private lateinit var placeService: PlaceService
 
     @Test
     @DisplayName("장소 상세 조회")
     fun testSearchPlace() {
+        val userId = 1L
         val placeId = 1L
-        val place = Place(id = placeId, userId = 1, placeName = "장소1", placeType = "restaurant")
+        val place = Place(id = placeId, userId = userId, placeName = "장소1", placeType = "restaurant")
         given(placeRepository.findById(placeId)).willReturn(Optional.of(place))
 
-        placeService.getPlace(placeId)
+        placeService.searchPlace(userId, placeId)
 
         verify(placeRepository).findById(placeId)
     }
@@ -44,7 +49,7 @@ class PlaceServiceTests {
         given(placeRepository.findById(placeId)).willReturn(Optional.empty())
 
         assertThrows<ApiException> {
-            placeService.getPlace(placeId)
+            placeService.searchPlace(1, placeId)
         }
     }
 
