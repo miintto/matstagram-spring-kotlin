@@ -12,7 +12,7 @@ import java.time.ZoneOffset
 private val logger = KotlinLogging.logger {}
 
 @Component
-class RecentProductManager {
+class RecentPlaceManager {
 
     @Autowired
     private lateinit var redissonClient: RedissonClient
@@ -33,7 +33,8 @@ class RecentProductManager {
         }
     }
 
-    fun getList(userId: Long): Collection<String> {
-        return getSortedSet(userId).valueRangeReversed(0, 10)
+    fun getList(userId: Long): List<Long> {
+        val sortedSet = getSortedSet(userId)
+        return sortedSet.valueRangeReversed(0, 10).map { str -> str.toLong() }
     }
 }

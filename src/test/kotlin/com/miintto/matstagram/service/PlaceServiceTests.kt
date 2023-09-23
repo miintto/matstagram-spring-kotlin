@@ -2,7 +2,6 @@ package com.miintto.matstagram.service
 
 import com.miintto.matstagram.domain.Place
 import com.miintto.matstagram.domain.repository.PlaceRepository
-import com.miintto.matstagram.manager.RecentProductManager
 import com.miintto.matstagram.common.exception.ApiException
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -21,9 +20,6 @@ class PlaceServiceTests {
 
     @MockBean
     private lateinit var placeRepository: PlaceRepository
-
-    @MockBean
-    private lateinit var recentProductManager: RecentProductManager
 
     @Autowired
     private lateinit var placeService: PlaceService

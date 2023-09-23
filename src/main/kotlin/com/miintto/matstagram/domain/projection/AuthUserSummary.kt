@@ -2,7 +2,7 @@ package com.miintto.matstagram.domain.projection
 
 import java.time.LocalDateTime
 
-interface AuthUserMapping {
+interface AuthUserSummary {
 
     val id: Long
 
