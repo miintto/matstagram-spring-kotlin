@@ -5,13 +5,14 @@ plugins {
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
     id("com.google.cloud.tools.jib") version "3.3.2"
     id("org.jlleitschuh.gradle.ktlint") version "11.5.1"
+    id("jacoco")
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
     kotlin("plugin.jpa") version "1.6.21"
 }
 
 group = "com.miintto"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.1-SNAPSHOT-${System.currentTimeMillis()}"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
@@ -68,5 +69,16 @@ jib {
     }
     container {
         creationTime.set("USE_CURRENT_TIMESTAMP")
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.10"
+}
+
+tasks.jacocoTestReport {
+    reports {
+        html.isEnabled = true
+        html.destination = file("$buildDir/jacoco/index.html")
     }
 }
